@@ -1,0 +1,382 @@
+_wandb:
+    value:
+        cli_version: 0.19.10
+        m: []
+        python_version: 3.11.12
+        t:
+            "1":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 11
+                - 12
+                - 41
+                - 49
+                - 51
+                - 53
+                - 55
+                - 71
+                - 84
+                - 98
+                - 105
+            "2":
+                - 1
+                - 2
+                - 3
+                - 5
+                - 11
+                - 12
+                - 41
+                - 49
+                - 51
+                - 53
+                - 55
+                - 71
+                - 84
+                - 98
+                - 105
+            "3":
+                - 13
+                - 16
+                - 23
+                - 55
+            "4": 3.11.12
+            "5": 0.19.10
+            "6": 4.51.3
+            "8":
+                - 5
+            "12": 0.19.10
+            "13": linux-x86_64
+accelerator_config:
+    value:
+        dispatch_batches: null
+        even_batches: true
+        gradient_accumulation_kwargs: null
+        non_blocking: false
+        split_batches: false
+        use_seedable_sampler: true
+adafactor:
+    value: false
+adam_beta1:
+    value: 0.9
+adam_beta2:
+    value: 0.999
+adam_epsilon:
+    value: 1e-08
+auto_find_batch_size:
+    value: false
+average_tokens_across_devices:
+    value: false
+batch_eval_metrics:
+    value: false
+batch_size:
+    value: 1
+bf16:
+    value: false
+bf16_full_eval:
+    value: false
+cliprange:
+    value: 0.2
+cliprange_value:
+    value: 0.2
+data_seed:
+    value: null
+dataloader_drop_last:
+    value: false
+dataloader_num_workers:
+    value: 0
+dataloader_persistent_workers:
+    value: false
+dataloader_pin_memory:
+    value: true
+dataloader_prefetch_factor:
+    value: null
+dataset_num_proc:
+    value: null
+ddp_backend:
+    value: null
+ddp_broadcast_buffers:
+    value: null
+ddp_bucket_cap_mb:
+    value: null
+ddp_find_unused_parameters:
+    value: null
+ddp_timeout:
+    value: 1800
+debug:
+    value: []
+deepspeed:
+    value: null
+disable_tqdm:
+    value: false
+do_eval:
+    value: false
+do_predict:
+    value: false
+do_train:
+    value: false
+ds3_gather_for_generation:
+    value: true
+eval_accumulation_steps:
+    value: null
+eval_delay:
+    value: 0
+eval_do_concat_batches:
+    value: true
+eval_on_start:
+    value: false
+eval_steps:
+    value: null
+eval_strategy:
+    value: "no"
+eval_use_gather_object:
+    value: false
+exp_name:
+    value: ppo_config
+fp16:
+    value: false
+fp16_backend:
+    value: auto
+fp16_full_eval:
+    value: false
+fp16_opt_level:
+    value: O1
+fsdp:
+    value: []
+fsdp_config:
+    value:
+        min_num_params: 0
+        xla: false
+        xla_fsdp_grad_ckpt: false
+        xla_fsdp_v2: false
+fsdp_min_num_params:
+    value: 0
+fsdp_transformer_layer_cls_to_wrap:
+    value: null
+full_determinism:
+    value: false
+gamma:
+    value: 1
+gradient_accumulation_steps:
+    value: 2
+gradient_checkpointing:
+    value: false
+gradient_checkpointing_kwargs:
+    value: null
+greater_is_better:
+    value: null
+group_by_length:
+    value: false
+half_precision_backend:
+    value: auto
+hub_always_push:
+    value: false
+hub_model_id:
+    value: null
+hub_private_repo:
+    value: null
+hub_strategy:
+    value: every_save
+hub_token:
+    value: <HUB_TOKEN>
+ignore_data_skip:
+    value: false
+include_for_metrics:
+    value: []
+include_inputs_for_metrics:
+    value: false
+include_num_input_tokens_seen:
+    value: false
+include_tokens_per_second:
+    value: false
+jit_mode_eval:
+    value: false
+kl_coef:
+    value: 0.05
+kl_estimator:
+    value: k1
+label_names:
+    value: null
+label_smoothing_factor:
+    value: 0
+lam:
+    value: 0.95
+learning_rate:
+    value: 1.41e-05
+length_column_name:
+    value: length
+load_best_model_at_end:
+    value: false
+local_batch_size:
+    value: null
+local_mini_batch_size:
+    value: null
+local_rank:
+    value: 0
+local_rollout_forward_batch_size:
+    value: 64
+log_level:
+    value: passive
+log_level_replica:
+    value: warning
+log_on_each_node:
+    value: true
+logging_dir:
+    value: trainer_output/runs/Apr29_23-13-48_bf456a37dad0
+logging_first_step:
+    value: false
+logging_nan_inf_filter:
+    value: true
+logging_steps:
+    value: 500
+logging_strategy:
+    value: steps
+lr_scheduler_type:
+    value: linear
+max_grad_norm:
+    value: 1
+max_steps:
+    value: -1
+metric_for_best_model:
+    value: null
+micro_batch_size:
+    value: null
+mini_batch_size:
+    value: 1
+missing_eos_penalty:
+    value: null
+model_adapter_name:
+    value: null
+mp_parameters:
+    value: ""
+neftune_noise_alpha:
+    value: null
+no_cuda:
+    value: false
+num_mini_batches:
+    value: 1
+num_ppo_epochs:
+    value: 4
+num_sample_generations:
+    value: 10
+num_total_batches:
+    value: null
+num_train_epochs:
+    value: 3
+optim:
+    value: adamw_torch
+optim_args:
+    value: null
+optim_target_modules:
+    value: null
+output_dir:
+    value: trainer_output
+overwrite_output_dir:
+    value: false
+past_index:
+    value: -1
+per_device_eval_batch_size:
+    value: 8
+per_device_train_batch_size:
+    value: 8
+per_gpu_eval_batch_size:
+    value: null
+per_gpu_train_batch_size:
+    value: null
+prediction_loss_only:
+    value: false
+push_to_hub:
+    value: false
+push_to_hub_model_id:
+    value: null
+push_to_hub_organization:
+    value: null
+push_to_hub_token:
+    value: <PUSH_TO_HUB_TOKEN>
+ray_scope:
+    value: last
+ref_adapter_name:
+    value: null
+remove_unused_columns:
+    value: true
+report_to:
+    value:
+        - tensorboard
+        - wandb
+response_length:
+    value: 53
+restore_callback_states_from_checkpoint:
+    value: false
+resume_from_checkpoint:
+    value: null
+reward_model_path:
+    value: EleutherAI/pythia-160m
+run_name:
+    value: trainer_output
+save_on_each_node:
+    value: false
+save_only_model:
+    value: false
+save_safetensors:
+    value: true
+save_steps:
+    value: 500
+save_strategy:
+    value: steps
+save_total_limit:
+    value: null
+seed:
+    value: 0
+sft_model_path:
+    value: EleutherAI/pythia-160m
+skip_memory_metrics:
+    value: true
+stop_token:
+    value: <STOP_TOKEN>
+stop_token_id:
+    value: null
+temperature:
+    value: 0.7
+tf32:
+    value: null
+torch_compile:
+    value: false
+torch_compile_backend:
+    value: null
+torch_compile_mode:
+    value: null
+torch_empty_cache_steps:
+    value: null
+torchdynamo:
+    value: null
+total_episodes:
+    value: null
+tp_size:
+    value: 0
+tpu_metrics_debug:
+    value: false
+tpu_num_cores:
+    value: null
+use_cpu:
+    value: false
+use_ipex:
+    value: false
+use_legacy_prediction_loop:
+    value: false
+use_liger_kernel:
+    value: false
+use_mps_device:
+    value: false
+vf_coef:
+    value: 0.1
+warmup_ratio:
+    value: 0
+warmup_steps:
+    value: 0
+weight_decay:
+    value: 0
+whiten_rewards:
+    value: false
+world_size:
+    value: null

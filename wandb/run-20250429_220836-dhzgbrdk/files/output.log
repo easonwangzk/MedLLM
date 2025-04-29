@@ -1,0 +1,14 @@
+[Step 0] Reward: 0.6556 | RAM: 63.07/83.48 GB | GPU: 29.92/39.56 GB
+Traceback (most recent call last):
+  File "/content/train.py", line 254, in <module>
+    train()
+  File "/content/train.py", line 207, in train
+    loss = ppo_rlhf_training_step(trainer.model, queries, response_tensors, torch.tensor(rewards, device=device))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/train.py", line 146, in ppo_rlhf_training_step
+    logprobs = torch.nn.functional.log_softmax(logits, dim=-1)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/torch/nn/functional.py", line 2248, in log_softmax
+    ret = input.log_softmax(dim)
+          ^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 39.56 GiB of which 2.90 GiB is free. Process 8155 has 36.65 GiB memory in use. Of the allocated memory 36.10 GiB is allocated by PyTorch, and 62.20 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
