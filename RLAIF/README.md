@@ -1,6 +1,6 @@
 # Medical LLM DPO Training
 
-This project implements a complete pipeline for training a medical language model using Direct Preference Optimization (DPO) on PubMedQA dataset.
+This project implements a complete pipeline for training a medical language model using DPO and PPO on PubMedQA dataset.
 
 ## Requirements
 
