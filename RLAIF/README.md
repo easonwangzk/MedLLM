@@ -23,8 +23,13 @@ python data_generation.py
 
 2. Train the model using DPO:
 ```bash
-python train.py
+python dpo_train.py
 ```
+
+3. Fine-tune the DPO-trained model using PPO
+```bash
+python train.py
+``` 
 
 3. Quantize and test the model:
 ```bash
@@ -34,7 +39,8 @@ python quantize.py
 ## Project Structure
 
 - `data_generation.py`: Generates RLAIF training data using OpenBioLLM
-- `train.py`: Implements DPO training using TRL
+- `dpo_train.py`: Runs preference optimization via DPO
+- `train.py`: Reinforcement Learning with AI Feedback (PPO fine-tuning)
 - `quantize.py`: Handles model quantization and testing
 - `requirements.txt`: Project dependencies
 
@@ -43,4 +49,4 @@ python quantize.py
 - The training process is optimized for a single A100 GPU
 - Model quantization is performed using 4-bit precision
 - Training data is generated from PubMedQA dataset
-- The base model used is Llama-medx_v3.1 
+- The base model used is `Llama-medx_v3.2`
