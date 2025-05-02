@@ -40,7 +40,7 @@ python quantize.py
 
 - `data_generation.py`: Generates RLAIF training data using OpenBioLLM
 - `dpo_train.py`: Runs preference optimization via DPO
-- `train.py`: Reinforcement Learning with AI Feedback (PPO fine-tuning)
+- `train.py`: PPO fine-tuning
 - `quantize.py`: Handles model quantization and testing
 - `requirements.txt`: Project dependencies
 
