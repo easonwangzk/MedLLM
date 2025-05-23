@@ -1,0 +1,138 @@
+def evaluate_model(model, tokenizer, test_dataset, metrics_to_track=None):
+
+    from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+    from rouge_score import rouge_scorer
+    import time
+    from tqdm.auto import tqdm
+    
+    if metrics_to_track is None:
+        metrics_to_track = ['accuracy', 'f1', 'rouge', 'latency', 'token_efficiency']
+    
+    results = {}
+    predictions = []
+    references = []
+    generation_times = []
+    token_counts = []
+    
+    # Set up ROUGE scorer
+    if 'rouge' in metrics_to_track:
+        scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2', 'rougeL'], use_stemmer=True)
+    
+    # Process each test example
+    for example in tqdm(test_dataset):
+        question = example['question']
+        reference = example['answer']
+        
+        # Measure generation time
+        start_time = time.time()
+        
+        # Generate response
+        inputs = tokenizer(
+            question,
+            return_tensors="pt",
+            truncation=True,
+            max_length=512,
+        ).to(model.device)
+        
+        with torch.no_grad():
+            outputs = model.generate(
+                **inputs,
+                max_new_tokens=150,
+                do_sample=False,
+                temperature=0.7,
+                top_p=0.9
+            )
+        
+        prediction = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        
+        # Clean up the prediction (remove the question part if it's included)
+        if "Question:" in prediction and "Answer:" in prediction:
+            prediction = prediction.split("Answer:")[1].strip()
+        
+        # Record metrics
+        end_time = time.time()
+        generation_times.append(end_time - start_time)
+        token_counts.append(len(outputs[0]))
+        
+        predictions.append(prediction)
+        references.append(reference)
+    
+    # Calculate accuracy (binary correctness)
+    if 'accuracy' in metrics_to_track:
+        # For medical QA, we can consider a simple binary correctness
+        # This is a simplified approach - in practice, you might want domain experts
+        binary_correctness = []
+        for pred, ref in zip(predictions, references):
+            # Check if key medical terms from reference appear in prediction
+            # This is a simple heuristic and can be improved
+            ref_terms = set([term.lower() for term in ref.split() if len(term) > 3])
+            pred_terms = set([term.lower() for term in pred.split() if len(term) > 3])
+            overlap = len(ref_terms.intersection(pred_terms)) / max(1, len(ref_terms))
+            binary_correctness.append(1 if overlap > 0.5 else 0)
+        
+        results['accuracy'] = np.mean(binary_correctness)
+    
+    # Calculate F1 score
+    if 'f1' in metrics_to_track:
+        # For text generation, we can use token-level F1
+        f1_scores = []
+        for pred, ref in zip(predictions, references):
+            pred_tokens = set(pred.lower().split())
+            ref_tokens = set(ref.lower().split())
+            
+            if len(pred_tokens) == 0 or len(ref_tokens) == 0:
+                f1_scores.append(0)
+                continue
+                
+            common = len(pred_tokens.intersection(ref_tokens))
+            precision = common / len(pred_tokens)
+            recall = common / len(ref_tokens)
+            
+            if precision + recall == 0:
+                f1_scores.append(0)
+            else:
+                f1_scores.append(2 * precision * recall / (precision + recall))
+        
+        results['f1_score'] = np.mean(f1_scores)
+    
+    # Calculate ROUGE scores
+    if 'rouge' in metrics_to_track:
+        rouge1_scores = []
+        rouge2_scores = []
+        rougeL_scores = []
+        
+        for pred, ref in zip(predictions, references):
+            rouge_scores = scorer.score(ref, pred)
+            rouge1_scores.append(rouge_scores['rouge1'].fmeasure)
+            rouge2_scores.append(rouge_scores['rouge2'].fmeasure)
+            rougeL_scores.append(rouge_scores['rougeL'].fmeasure)
+        
+        results['rouge1'] = np.mean(rouge1_scores)
+        results['rouge2'] = np.mean(rouge2_scores)
+        results['rougeL'] = np.mean(rougeL_scores)
+    
+    # Calculate latency metrics
+    if 'latency' in metrics_to_track:
+        results['avg_latency'] = np.mean(generation_times)
+        results['p90_latency'] = np.percentile(generation_times, 90)
+        results['p95_latency'] = np.percentile(generation_times, 95)
+    
+    # Calculate token efficiency
+    if 'token_efficiency' in metrics_to_track:
+        results['avg_tokens_per_response'] = np.mean(token_counts)
+    
+    # Medical-specific metrics (if applicable)
+    if 'medical_accuracy' in metrics_to_track:
+        # This would require a medical knowledge base or expert evaluation
+        # Placeholder for domain-specific evaluation
+        results['medical_accuracy'] = "Requires expert evaluation"
+    
+    # Log results to W&B if available
+    try:
+        import wandb
+        if wandb.run is not None:
+            wandb.log(results)
+    except ImportError:
+        pass
+    
+    return results
